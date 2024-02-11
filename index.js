@@ -6,6 +6,8 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 const connection = require('./database/database');
+const userController = require('./controllers/user.controller');
+const userModel = require('./models/user.model');
 
 connection.authenticate().then(() => {
     console.log('Database connected.');
@@ -16,4 +18,6 @@ connection.authenticate().then(() => {
 app.listen(env.PORT, env.DATABASE_HOST, () => {
     console.log(`[server]: Server ${env.DATABASE_HOST} is running at http://localhost:${env.PORT}`);
 });
+
+app.use('/', userController);
 
